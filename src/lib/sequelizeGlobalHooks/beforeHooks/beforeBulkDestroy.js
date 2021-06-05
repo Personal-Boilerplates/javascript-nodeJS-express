@@ -1,0 +1,14 @@
+export const beforeBulkDestroy = (options) => {
+  const tableName = options.tableName;
+  if (
+    tableName !== "REG" &&
+    tableName !== "EST" &&
+    tableName !== "CID" &&
+    tableName !== "BAI"
+  ) {
+    if (!options.userCod) {
+      throw Error("É necessário ser um usuário para realizar esta ação");
+    }
+    return options.model.update({ status: 0 }, { where: options.where, hooks: false });
+  }
+};
